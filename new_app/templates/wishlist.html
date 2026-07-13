@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="product-grid">
+    {% for item in wishlist_items %}
+    <div class="product-card wishlist-item">
+      <div class="product-info">
+        <h3>{{ item.product.name }}</h3>
+        <p class="price">${{ item.product.price }}</p>
+        <p class="description">{{ item.product.description }}</p>
+      </div>
+      <div class="product-actions">
+        <a href="{% url 'add_to_cart' item.product.id %}" class="btn-cart">Add to Cart</a>
+        <a href="{% url 'remove_from_wishlist' item.id %}" class="btn-remove">Remove</a>
+      </div>
+    </div>
+    {% empty %}
+    <p class="no-products">Your wishlist is empty.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

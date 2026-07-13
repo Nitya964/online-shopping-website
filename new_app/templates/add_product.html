@@ -1,0 +1,115 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+
+<style>
+  /* Container */
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+
+  /* Heading */
+  .container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1e293b;
+  }
+
+
+  /* Form Labels */
+  form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #334155;
+  }
+
+
+  /* Inputs & Textarea */
+  form input,
+  form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 14px;
+  }
+
+
+  /* Focus Effect */
+  form input:focus,
+  form textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  }
+
+
+  /* Buttons */
+  .form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Primary Button */
+  .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background: #1d4ed8;
+  }
+
+
+  /* Secondary Button */
+  .btn-secondary {
+    background: #64748b;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+
+
+  .btn-secondary:hover {
+    background: #475569;
+  }
+</style>
+
+<div class="container">
+  <h2>Add New Product</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <label>Product Name:</label>
+    <input type="text" name="name" placeholder="Enter product name" required>
+
+    <label>Price:</label>
+    <input type="number" name="price" placeholder="Enter price" required>
+
+    <label>Description:</label>
+    <textarea name="description" placeholder="Enter product description" rows="4"></textarea>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">Save Product</button>
+      <a href="{% url 'admin_product' %}" class="btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

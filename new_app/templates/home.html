@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="welcome-section">
+    <h1>Welcome to Our Store</h1>
+    <p>Shop the best products and manage your wishlist!</p>
+    {% if user.is_authenticated %}
+    <div class="auth-buttons">
+      <a href="{% url 'product_list' %}" class="btn-primary">Browse Products</a>
+    </div>
+    {% else %}
+    <div class="auth-buttons">
+      <a href="{% url 'login' %}" class="btn-primary">Login</a>
+      <a href="{% url 'register' %}" class="btn-secondary">Register</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<style>
+  .welcome-section {
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .welcome-section h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .welcome-section p {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 40px;
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .auth-buttons a {
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h2>Product List</h2>
+<div class="product-grid">
+  {% for product in products %}
+  <div class="product-card">
+    <div class="product-info">
+      <h3>{{ product.name }}</h3>
+      <p class="price">${{ product.price }}</p>
+      <p class="description">{{ product.description }}</p>
+    </div>
+    <div class="product-actions">
+      <a href="{% url 'add_to_cart' product.id %}" class="btn-cart">Add to Cart</a>
+      <a href="{% url 'add_to_wishlist' product.id %}" class="btn-wishlist">Add to Wishlist</a>
+    </div>
+  </div>
+  {% empty %}
+  <p class="no-products">No products available.</p>
+  {% endfor %}
+</div>
+
+
+<style>
+  .btn-cart,
+  .btn-wishlist {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+
+
+  .btn-cart {
+    background: #3498db;
+    color: white;
+  }
+
+
+  .btn-cart:hover:not(:disabled) {
+    background: #2980b9;
+  }
+
+
+  .btn-wishlist {
+    background: #e74c3c;
+    color: white;
+  }
+
+
+  .btn-wishlist:hover:not(:disabled) {
+    background: #c0392b;
+  }
+
+
+  .btn-cart:disabled,
+  .btn-wishlist:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+</style>
+{% endblock %}

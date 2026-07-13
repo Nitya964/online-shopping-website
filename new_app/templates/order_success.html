@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="success-message">
+    <div class="success-icon">✓</div>
+    <h1>Order Placed Successfully!</h1>
+    <p>Thank you for your order. Your order has been received and is being processed.</p>
+  </div>
+
+
+  <div class="action-buttons">
+    <a href="{% url 'my_orders' %}" class="btn-orders">View My Orders</a>
+    <a href="{% url 'product_list' %}" class="btn-continue">Continue Shopping</a>
+  </div>
+</div>
+
+
+<style>
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+
+  .success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+
+  .success-icon {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+
+  .success-message h1 {
+    margin: 0 0 15px 0;
+    color: #155724;
+  }
+
+
+
+
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
+
+  .btn-orders,
+  .btn-continue {
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+
+  .btn-orders {
+    background: #3498db;
+    color: white;
+  }
+
+
+  .btn-orders:hover {
+    background: #2980b9;
+  }
+
+
+  .btn-continue {
+    background: #27ae60;
+    color: white;
+  }
+
+
+  .btn-continue:hover {
+    background: #219a52;
+  }
+</style>
+{% endblock %}

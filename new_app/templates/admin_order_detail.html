@@ -1,0 +1,236 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<div class="container">
+  <!-- Back Button -->
+  <a href="{% url 'admin_orders' %}" class="btn-back">← Back to Orders</a>
+
+
+  <div class="admin-header">
+    <h2>Order #{{ order.id }} Details</h2>
+  </div>
+
+
+  <!-- Order Info Cards -->
+  <div class="order-info-section">
+    <div class="info-card">
+      <h3>Customer Information</h3>
+      <p><strong>Name:</strong> {{ order.user.username }}</p>
+      <p><strong>Email:</strong> {{ order.user.gmail|default:"N/A" }}</p>
+      <p><strong>Phone:</strong> {{ order.phone_number }}</p>
+    </div>
+
+
+    <div class="info-card">
+      <h3>Order Information</h3>
+      <p><strong>Order Date:</strong> {{ order.order_date|date:"Y-m-d H:i" }}</p>
+      <p><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+      <p><strong>Payment:</strong> {{ order.payment_method }}</p>
+      <p><strong>Status:</strong> <span class="status status-{{ order.status|lower }}">{{ order.status }}</span></p>
+    </div>
+
+
+    <div class="info-card">
+      <h3>Shipping Address</h3>
+      <p>{{ order.shipping_address }}</p>
+    </div>
+
+
+    <div class="info-card">
+      <h3>Tracking Information</h3>
+      <p><strong>Tracking ID:</strong> {{ order.tracking_id|default:"Not Assigned" }}</p>
+      <p><strong>Tracking Details:</strong> {{ order.tracking_details|default:"No details available" }}</p>
+    </div>
+  </div>
+
+
+  <!-- Order Items -->
+  <div class="order-items-section">
+    <h3>Order Items</h3>
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order_items %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>${{ item.price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>${{ item.total_price }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="total-row">
+          <td colspan="3"><strong>Total</strong></td>
+          <td><strong>${{ order.total_amount }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- Action Button -->
+  <div class="action-section">
+    <a href="{% url 'admin_update_order' order.id %}" class="btn-update">Update Order Status & Tracking</a>
+  </div>
+</div>
+
+
+<style>
+  .btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+
+  .btn-back:hover {
+    background: #5a6268;
+  }
+
+
+  .order-info-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+  }
+
+
+  .info-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+
+  .info-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+
+  .info-card p {
+    margin: 8px 0;
+    color: #555;
+  }
+
+
+  .status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+
+  .status-pending {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .status-processing {
+    background: #cce5ff;
+    color: #004085;
+  }
+
+  .status-shipped {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-out {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+
+  .status-delivered {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+
+  .order-items-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+  }
+
+
+  .order-items-section h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+
+
+  .items-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+
+  .items-table thead {
+    background: #3498db;
+    color: white;
+  }
+
+
+  .items-table th,
+  .items-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+
+  .items-table .total-row {
+    background: #f8f9fa;
+  }
+
+
+  .items-table .total-row td {
+    border-top: 2px solid #2c3e50;
+    font-size: 16px;
+  }
+
+
+  .action-section {
+    margin: 20px 0;
+  }
+
+
+  .btn-update {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+
+  .btn-update:hover {
+    background: #218838;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h2>My Orders</h2>
+
+  {% if orders %}
+  <div class="orders-list">
+    {% for order in orders %}
+    <div class="order-card">
+      <div class="order-header">
+        <h3>Order #{{ order.id }}</h3>
+        <span class="order-status status-{{ order.status|lower }}">{{ order.status }}</span>
+      </div>
+      <div class="order-body">
+        <div class="order-info">
+          <p><strong>Date:</strong> {{ order.order_date|date:"F d, Y" }}</p>
+          <p><strong>Total:</strong> ${{ order.total_amount }}</p>
+          <p><strong>Payment:</strong> {{ order.payment_method }}</p>
+        </div>
+        <div class="order-tracking">
+          {% if order.tracking_id %}
+          <p><strong>Tracking ID:</strong> {{ order.tracking_id }}</p>
+          {% else %}
+          <p><strong>Tracking:</strong> <span class="no-tracking">Not assigned yet</span></p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="order-footer">
+        <a href="{% url 'order_detail' order.id %}" class="btn-view">View Details</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-orders">
+    <p>You haven't placed any orders yet.</p>
+    <a href="{% url 'product_list' %}" class="btn-shop">Start Shopping</a>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+
+  .container h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+
+
+  .orders-list {
+    margin-top: 20px;
+  }
+
+
+  .order-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+
+  .order-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ecf0f1;
+  }
+
+
+  .order-header h3 {
+    margin: 0;
+    color: #2c3e50;
+  }
+
+
+  .order-status {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+
+  .status-pending {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .status-processing {
+    background: #cce5ff;
+    color: #004085;
+  }
+
+  .status-shipped {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-out {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+
+  .status-delivered {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+
+  .order-body {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+
+  .order-info p,
+  .order-tracking p {
+    margin: 8px 0;
+    color: #555;
+  }
+
+
+  .no-tracking {
+    color: #999;
+    font-style: italic;
+  }
+
+
+  .order-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #ecf0f1;
+    text-align: right;
+  }
+
+
+  .btn-view {
+    display: inline-block;
+    padding: 8px 20px;
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+
+  .btn-view:hover {
+    background: #2980b9;
+  }
+
+
+  .empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+
+  .empty-orders p {
+    font-size: 18px;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+  }
+
+
+  .btn-shop {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #27ae60;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+
+  .btn-shop:hover {
+    background: #219a52;
+  }
+
+
+  @media (max-width: 600px) {
+    .order-body {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}

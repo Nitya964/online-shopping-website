@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Django Website</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="{% static 'images/logo.avif' %}" alt="logo">
+    </div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+
+
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'wishlist_view' %}">Wishlist ({{ wishlist_count }})</a></li>
+      <li><a href="{% url 'cart_view' %}"> Cart ({{ cart_count }})</a></li>
+      <li><a href="{% url 'product_list' %}">Products</a></li>
+      <li><a href="{% url 'my_orders' %}">My Orders</a></li>
+      <li><a href="{% url 'logout' %}"
+          style="background-color: red; margin: 10PX; padding: 10px; border-radius: 10px;">Logout</a></li>
+      {% else %}
+
+
+      <li><a href="{% url 'login' %}"
+          style="background-color: rgb(0, 255, 51); margin: 10PX; padding: 10px; border-radius: 10px;">Login</a></li>
+
+
+      {% endif %}
+
+
+    </ul>
+  </nav>
+  <!-- Page Content -->
+  <div class="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Custom JS -->
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
