@@ -77,7 +77,23 @@ class Order(models.Model):
     def items_count(self):
         return self.order_items.count()
 
-        
+    def cancel(self):
+        """Return True if cancelled, False if not allowed."""
+        if self.status in ('Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'):
+            return False
+        # restock products if Product has 'stock' field
+        for item in self.order_items.all():
+            product = getattr(item, 'product', None)
+            qty = getattr(item, 'quantity', 0)
+            if product is not None and hasattr(product, 'stock'):
+                product.stock = (product.stock or 0) + qty
+                product.save()
+        # TODO: call refund logic for payment gateway if required
+        self.status = 'Cancelled'
+        self.save()
+        return True
+
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
     product = models.ForeignKey('Product', on_delete=models.CASCADE)

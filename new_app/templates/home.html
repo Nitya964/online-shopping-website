@@ -6,12 +6,12 @@
     <p>Shop the best products and manage your wishlist!</p>
     {% if user.is_authenticated %}
     <div class="auth-buttons">
-      <a href="{% url 'product_list' %}" class="btn-primary">Browse Products</a>
+      <a href="{% url 'new_app:product_list' %}" class="btn-primary">Browse Products</a>
     </div>
     {% else %}
     <div class="auth-buttons">
-      <a href="{% url 'login' %}" class="btn-primary">Login</a>
-      <a href="{% url 'register' %}" class="btn-secondary">Register</a>
+      <a href="{% url 'new_app:login' %}" class="btn-primary">Login</a>
+      <a href="{% url 'new_app:register' %}" class="btn-secondary">Register</a>
     </div>
     {% endif %}
   </div>

@@ -12,8 +12,8 @@
       <p class="description">{{ product.description }}</p>
     </div>
     <div class="product-actions">
-      <a href="{% url 'add_to_cart' product.id %}" class="btn-cart">Add to Cart</a>
-      <a href="{% url 'add_to_wishlist' product.id %}" class="btn-wishlist">Add to Wishlist</a>
+      <a href="{% url 'new_app:add_to_cart' product.id %}" class="btn-cart">Add to Cart</a>
+      <a href="{% url 'new_app:add_to_wishlist' product.id %}" class="btn-wishlist">Add to Wishlist</a>
     </div>
   </div>
   {% empty %}

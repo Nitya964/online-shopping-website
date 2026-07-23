@@ -1,54 +1,133 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Django Website</title>
-  <!-- CSS -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <!-- SweetAlert2 CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Shopping Website</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f4f4;
+    }
+
+    nav {
+      background: #2c3e50;
+      padding: 15px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      color: #f1c40f;
+    }
+
+    .container {
+      width: 90%;
+      margin: 20px auto;
+    }
+
+    .messages {
+      margin: 15px 0;
+    }
+
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">
-      <img src="{% static 'images/logo.avif' %}" alt="logo">
-    </div>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
 
+  <nav>
+    <ul>
+
+      <li><a href="{% url 'new_app:home' %}">Home</a></li>
+
+      <li><a href="{% url 'new_app:product_list' %}">Products</a></li>
 
       {% if user.is_authenticated %}
-      <li><a href="{% url 'wishlist_view' %}">Wishlist ({{ wishlist_count }})</a></li>
-      <li><a href="{% url 'cart_view' %}"> Cart ({{ cart_count }})</a></li>
-      <li><a href="{% url 'product_list' %}">Products</a></li>
-      <li><a href="{% url 'my_orders' %}">My Orders</a></li>
-      <li><a href="{% url 'logout' %}"
-          style="background-color: red; margin: 10PX; padding: 10px; border-radius: 10px;">Logout</a></li>
+
+      <li><a href="{% url 'new_app:cart_view' %}">Cart</a></li>
+
+      <li><a href="{% url 'new_app:wishlist_view' %}">Wishlist</a></li>
+
+      <li><a href="{% url 'new_app:my_orders' %}">My Orders</a></li>
+
+      {% if user.is_staff %}
+      <li><a href="{% url 'new_app:admin_dashboard' %}">Admin Dashboard</a></li>
+      {% endif %}
+
+      <li><a href="{% url 'new_app:logout' %}">Logout</a></li>
+
       {% else %}
 
+      <li><a href="{% url 'new_app:login' %}">Login</a></li>
 
-      <li><a href="{% url 'login' %}"
-          style="background-color: rgb(0, 255, 51); margin: 10PX; padding: 10px; border-radius: 10px;">Login</a></li>
-
+      <li><a href="{% url 'new_app:register' %}">Register</a></li>
 
       {% endif %}
 
-
     </ul>
   </nav>
-  <!-- Page Content -->
-  <div class="content">
+
+  <div class="container">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
     {% block content %}
     {% endblock %}
+
   </div>
-  <!-- SweetAlert2 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Custom JS -->
-  <script src="{% static 'js/script.js' %}"></script>
+
+  <footer>
+    <p>© 2026 Online Shopping Website | Developed using Django</p>
+  </footer>
+
 </body>
 
 </html>

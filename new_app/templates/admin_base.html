@@ -11,18 +11,20 @@
 <body>
 
   <div class="admin-container">
-    <!-- Sidebar -->
+
     <aside class="sidebar">
       <h2 class="logo">Admin</h2>
+
       <ul>
-        <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
-        <li><a href="{% url 'admin_product' %}">Products</a></li>
-        <li><a href="{% url 'logout' %}" class="logout">Logout</a></li>
+        <li><a href="{% url 'new_app:admin_dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'new_app:admin_product' %}">Products</a></li>
+        <li><a href="{% url 'new_app:logout' %}">Logout</a></li>
       </ul>
+
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content">
+
       <header class="topbar">
         <h1>Admin Dashboard</h1>
       </header>
@@ -31,11 +33,13 @@
         {% block content %}
         {% endblock %}
       </section>
+
     </main>
 
   </div>
 
   <script src="{% static 'js/script.js' %}"></script>
+
 </body>
 
 </html>

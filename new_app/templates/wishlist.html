@@ -10,8 +10,8 @@
         <p class="description">{{ item.product.description }}</p>
       </div>
       <div class="product-actions">
-        <a href="{% url 'add_to_cart' item.product.id %}" class="btn-cart">Add to Cart</a>
-        <a href="{% url 'remove_from_wishlist' item.id %}" class="btn-remove">Remove</a>
+        <a href="{% url 'new_app:add_to_cart' item.product.id %}" class="btn-cart">Add to Cart</a>
+        <a href="{% url 'new_app:remove_from_wishlist' item.id %}" class="btn-remove">Remove</a>
       </div>
     </div>
     {% empty %}

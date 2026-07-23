@@ -5,7 +5,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Cart, CustomUser, OrderItem, Product, Wishlist
 from .models import Product, CustomUser, Cart, Wishlist, Order, OrderItem
 from .models import CustomUser
-
+from django.views.decorators.http import require_POST
+from django.contrib import messages
+from .models import Order
 
 # create your views here.
 def home(request):
@@ -942,3 +944,17 @@ class AdminOrderUpdateAPI(APIView):
                 'status': 'error',
                 'message': 'Order not found'
             }, status=status.HTTP_404_NOT_FOUND)
+
+
+
+# Cancel Order
+@login_required
+@require_POST
+def cancel_order(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    if order.cancel():
+        messages.success(request, "Order cancelled.")
+    else:
+        messages.error(request, "Cannot cancel this order.")
+    # redirect back to order detail or referer
+    return redirect(request.META.get('HTTP_REFERER') or 'order_detail', pk=order.pk)

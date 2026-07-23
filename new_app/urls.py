@@ -1,11 +1,7 @@
 #new_app/urls.py
 from django.urls import path
-from.import views
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,    # Login
-    TokenRefreshView,       # Refresh token
-)
-
+from . import views
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
 
@@ -18,7 +14,7 @@ urlpatterns = [
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
-    path('admin_product', views.admin_product, name='admin_product'),
+    path('admin-product/', views.admin_product, name='admin_product'),
 
  # Cart & Wishlist Actions
     path('cart/', views.cart_view, name='cart_view'),
@@ -30,27 +26,6 @@ urlpatterns = [
     path('remove_from_wishlist/<int:wishlist_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('update_quantity/<int:cart_id>/', views.update_cart_quantity, name='update_cart_quantity'),
     
-# Checkout & Orders
-    path('checkout/', views.checkout, name='checkout'),
-    path('order-success/<int:order_id>/', views.order_success, name='order_success'),
-    path('my-orders/', views.my_orders, name='my_orders'),
-    path('order-detail/<int:order_id>/', views.order_detail, name='order_detail'),
-
-# Admin Order Management
-    path('admin-orders/', views.admin_orders, name='admin_orders'),
-    path('admin-order-detail/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
-    path('admin-update-order/<int:order_id>/', views.admin_update_order, name='admin_update_order'),
-
-# Cart & Wishlist Actions
-    path('cart/', views.cart_view, name='cart_view'),
-    path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
-    path('remove_from_cart/<int:cart_id>/', views.remove_from_cart, name='remove_from_cart'),
-
-    path('wishlist/', views.wishlist_view, name='wishlist_view'),
-    path('add_to_wishlist/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
-    path('remove_from_wishlist/<int:wishlist_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
-    path('update_quantity/<int:cart_id>/', views.update_cart_quantity, name='update_cart_quantity'),
-
 # Checkout & Orders
     path('checkout/', views.checkout, name='checkout'),
     path('order-success/<int:order_id>/', views.order_success, name='order_success'),
@@ -110,4 +85,5 @@ urlpatterns = [
     # Admin Order APIs
     path('api/admin/orders/', views.AdminOrderListAPI.as_view(), name='api_admin_order_list'),
     path('api/admin/orders/<int:order_id>/update/', views.AdminOrderUpdateAPI.as_view(), name='api_admin_order_update'),
+    path('orders/<int:pk>/cancel/', views.cancel_order, name='order_cancel'),
 ]
